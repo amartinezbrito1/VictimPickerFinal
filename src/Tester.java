@@ -1,10 +1,17 @@
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Tester extends JFrame {
 
     public static void main(String[] args) {
+
+        JFrame mainframe = new JFrame("Victim Picker Group Project");
+        mainframe.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+
+
         Victim victim1 = new Victim("Abraham", 1);
         Victim victim2 = new Victim("Albert", 2);
         Victim victim3 = new Victim("michael", 3);
@@ -28,12 +35,16 @@ public class Tester extends JFrame {
             }
         };
         VictimPickerGUI victimPickerGUI = new VictimPickerGUI(victimPicker, volunteerInterface);
+        victimPickerGUI.setPreferredSize(new Dimension(1000,1000));
+        mainframe.getContentPane().add(victimPickerGUI);
+        mainframe.pack();
+        mainframe.setVisible(true);
 
         // Load victims
         victimPicker.loadList(Arrays.asList(victim1, victim2, victim3, victim4, victim5));
 
 
-        victimPickerGUI.pickButton.doClick();
+        //victimPickerGUI.pickButton.doClick();
         victimPickerGUI.markAbsentButton.doClick();
 
         // Award points
