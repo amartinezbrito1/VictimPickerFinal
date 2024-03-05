@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -7,6 +8,12 @@ public class VictimPickerGUI extends JPanel {
 
     private VictimPicker victimPicker;
     private VolunteerInterface volunteerInterface;
+    private VictimPickerGUI here;
+
+    private AllVictimsPanel all_victims;
+
+    private ArrayList<String> victim_names;
+    private String victim_name;
 
     JButton pickButton;
     private JTextField volunteerField;
@@ -16,9 +23,16 @@ public class VictimPickerGUI extends JPanel {
 
     private Timer timer;
     private int timerSeconds = 60;
+
     public VictimPickerGUI(VictimPicker victimPicker, VolunteerInterface volunteerInterface) {
+        here = this;
+        //arbitrarily set the size of the main panel (victim picker) so that we have an idea of how to place the other panels it contains.
+        this.setPreferredSize(new Dimension(1200, 1000));
+
         this.victimPicker = victimPicker;
         this.volunteerInterface = volunteerInterface;
+        this.all_victims = new AllVictimsPanel();
+        this.victim_names = new ArrayList<String>();
 
         pickButton = new JButton("Pick Two Victims");
         volunteerField = new JTextField(10);
@@ -30,7 +44,15 @@ public class VictimPickerGUI extends JPanel {
         pickButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                victim_names.clear();
+
                 ArrayList<Victim> chosen = victimPicker.chooseTwo();
+                for(Victim chosen_victim: chosen){
+                     victim_name = chosen_victim.getName();
+                     victim_names.add(victim_name);
+                     all_victims.setVictimNames(victim_names);
+                     all_victims.setVictimsIcon();
+                }
                 volunteerInterface.displayChoseVictims(chosen); // Update UI
                 startTimer();
             }
@@ -57,6 +79,15 @@ public class VictimPickerGUI extends JPanel {
             }
         });
 
+        this.add(all_victims);
+
+        this.add(pickButton);
+        this.add(volunteerField);
+        this.add(markAbsentButton);
+        this.add(timerLabel);
+        this.add(victimToMarkField);
+
+        this.setVisible(true);
 
     }
 
@@ -85,4 +116,6 @@ public class VictimPickerGUI extends JPanel {
         }
         return null;
     }
+
+
 }
