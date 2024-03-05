@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class AllVictimsPanel extends JPanel {
     private ArrayList<VictimPanel> victims;
-    private VictimPanel victim1;
-    private VictimPanel victim2;
     private int counter;
 
     public AllVictimsPanel(){
